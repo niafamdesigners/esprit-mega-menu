@@ -117,6 +117,20 @@ class EspritMegaMenu {
         // Add active class
         item.classList.add('esprit-menu__item--active');
         
+        // Apply smart positioning to prevent overflow
+        this.adjustSubmenuPosition(megaMenu);
+        
+        // Get horizontal offset after positioning calculation
+        const horizontalOffset = megaMenu.getAttribute('data-horizontal-offset') || '0';
+        
+        // Set initial state and enable transition
+        megaMenu.style.transition = 'all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)';
+        
+        // Apply final transform with animation
+        requestAnimationFrame(() => {
+            megaMenu.style.transform = `translateX(${horizontalOffset}px) translateY(0) scale(1)`;
+        });
+        
         // Store reference
         this.activeMegaMenu = { item, megaMenu };
         
@@ -124,11 +138,93 @@ class EspritMegaMenu {
         this.animateMegaMenuEntrance(megaMenu);
     }
 
+    adjustSubmenuPosition(submenu) {
+        if (window.innerWidth <= 991) return; // Skip on mobile
+        
+        // Reset any previous positioning
+        submenu.removeAttribute('data-position-adjusted');
+        submenu.removeAttribute('data-horizontal-offset');
+        
+        // Store original styles
+        const originalStyles = {
+            visibility: submenu.style.visibility,
+            opacity: submenu.style.opacity,
+            transform: submenu.style.transform,
+            transition: submenu.style.transition
+        };
+        
+        // Make submenu temporarily visible for accurate measurement
+        submenu.style.visibility = 'visible';
+        submenu.style.opacity = '1';
+        submenu.style.transform = 'translateY(0) scale(1)';
+        submenu.style.transition = 'none';
+        
+        // Force reflow and get measurements
+        submenu.offsetHeight;
+        const submenuRect = submenu.getBoundingClientRect();
+        const viewportWidth = window.innerWidth;
+        const margin = 10;
+        
+        let transformX = 0;
+        let needsAdjustment = false;
+        
+        console.log('📏 Measuring submenu position:', {
+            left: submenuRect.left,
+            right: submenuRect.right,
+            width: submenuRect.width,
+            viewportWidth: viewportWidth
+        });
+        
+        // Check for left overflow (چک کردن سرریز از سمت چپ)
+        if (submenuRect.left < margin) {
+            const overflowAmount = margin - submenuRect.left;
+            transformX = overflowAmount;
+            needsAdjustment = true;
+            console.log('🔧 Left overflow detected - moving right:', {
+                overflowAmount: overflowAmount,
+                newTransformX: transformX
+            });
+        }
+        // Check for right overflow (چک کردن سرریز از سمت راست)
+        else if (submenuRect.right > viewportWidth - margin) {
+            const overflowAmount = submenuRect.right - (viewportWidth - margin);
+            transformX = -overflowAmount;
+            needsAdjustment = true;
+            console.log('🔧 Right overflow detected - moving left:', {
+                overflowAmount: overflowAmount,
+                newTransformX: transformX
+            });
+        }
+        
+        // Store the horizontal offset for later use
+        if (needsAdjustment) {
+            submenu.setAttribute('data-horizontal-offset', transformX.toString());
+            submenu.setAttribute('data-position-adjusted', 'true');
+            console.log('✅ Position adjustment calculated:', {
+                horizontalOffset: transformX,
+                willMoveRight: transformX > 0,
+                willMoveLeft: transformX < 0
+            });
+        }
+        
+        // Restore original styles
+        submenu.style.visibility = originalStyles.visibility || '';
+        submenu.style.opacity = originalStyles.opacity || '';
+        submenu.style.transform = originalStyles.transform || '';
+        submenu.style.transition = originalStyles.transition || '';
+    }
+
     hideMegaMenu(item, megaMenu) {
         if (window.innerWidth <= 991) return; // Skip on mobile
         
         // Remove active class
         item.classList.remove('esprit-menu__item--active');
+        
+        // Clear transform when hiding
+        megaMenu.style.transform = '';
+        megaMenu.style.transition = '';
+        megaMenu.removeAttribute('data-horizontal-offset');
+        megaMenu.removeAttribute('data-position-adjusted');
         
         // Clear reference
         if (this.activeMegaMenu && this.activeMegaMenu.item === item) {
@@ -145,6 +241,20 @@ class EspritMegaMenu {
         // Add active class
         item.classList.add('esprit-menu__item--active');
         
+        // Apply smart positioning to prevent overflow
+        this.adjustSubmenuPosition(dropdown);
+        
+        // Get horizontal offset after positioning calculation
+        const horizontalOffset = dropdown.getAttribute('data-horizontal-offset') || '0';
+        
+        // Set initial state and enable transition
+        dropdown.style.transition = 'all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)';
+        
+        // Apply final transform with animation
+        requestAnimationFrame(() => {
+            dropdown.style.transform = `translateX(${horizontalOffset}px) translateY(0) scale(1)`;
+        });
+        
         // Store reference
         this.activeDropdown = { item, dropdown };
         
@@ -157,6 +267,12 @@ class EspritMegaMenu {
         
         // Remove active class
         item.classList.remove('esprit-menu__item--active');
+        
+        // Clear transform when hiding
+        dropdown.style.transform = '';
+        dropdown.style.transition = '';
+        dropdown.removeAttribute('data-horizontal-offset');
+        dropdown.removeAttribute('data-position-adjusted');
         
         // Clear reference
         if (this.activeDropdown && this.activeDropdown.item === item) {
