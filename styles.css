@@ -120,22 +120,23 @@ body {
     transform: scaleX(-1) rotate(180deg);
 }
 
-/* Mega Menu Styles */
+/* Mega Menu Styles - Academic University Theme */
 .esprit-mega-menu {
     position: absolute;
     top: 100%;
     right: 0;
-    background: white;
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fc 100%);
     min-width: min(800px, calc(100vw - 20px));
     max-width: calc(100vw - 20px);
-    border-radius: 8px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(25, 55, 109, 0.15), 0 4px 12px rgba(25, 55, 109, 0.08);
     opacity: 0;
     visibility: hidden;
     /* Initial transform removed - JavaScript will handle all transforms */
     transform: translateY(-5px) scale(0.95);
     z-index: 999;
-    border-top: 3px solid #667eea;
+    border-top: 4px solid #19376d;
+    border: 1px solid rgba(25, 55, 109, 0.08);
 }
 
 .esprit-menu__item--has-mega:hover .esprit-mega-menu {
@@ -147,8 +148,11 @@ body {
 .esprit-mega-menu__container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    padding: 30px;
+    gap: 35px;
+    padding: 35px;
+    background: rgba(248, 249, 252, 0.3);
+    border-radius: 8px;
+    margin: 8px;
 }
 
 .esprit-mega-menu__column {
@@ -164,13 +168,16 @@ body {
 }
 
 .esprit-mega-menu__title {
-    color: #333;
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 15px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #667eea;
+    color: #19376d;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #19376d;
     position: relative;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
 }
 
 .esprit-mega-menu__title::after {
@@ -178,9 +185,10 @@ body {
     position: absolute;
     bottom: -2px;
     right: 0;
-    width: 30px;
+    width: 40px;
     height: 2px;
-    background: #ffd700;
+    background: linear-gradient(90deg, #0b5394 0%, #4a90a4 100%);
+    border-radius: 1px;
 }
 
 .esprit-mega-menu__list {
@@ -188,40 +196,47 @@ body {
 }
 
 .esprit-mega-menu__item {
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .esprit-mega-menu__link {
-    color: #666;
+    color: #4a5568;
     text-decoration: none;
-    padding: 8px 12px;
+    padding: 14px 24px;
     display: block;
-    border-radius: 4px;
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
+    font-weight: 500;
+    font-size: 14px;
+    border-left: 3px solid transparent;
+    position: relative;
 }
 
 .esprit-mega-menu__link:hover {
-    color: #667eea;
-    background-color: rgba(102, 126, 234, 0.08);
+    color: #19376d;
+    background: linear-gradient(135deg, rgba(25, 55, 109, 0.08) 0%, rgba(74, 144, 164, 0.05) 100%);
+    border-left: 3px solid #0b5394;
+    transform: translateX(2px);
+    box-shadow: 0 2px 6px rgba(25, 55, 109, 0.08);
 }
 
-/* Dropdown Menu Styles */
+/* Dropdown Menu Styles - Academic University Theme */
 .esprit-dropdown {
     position: absolute;
     top: 100%;
     right: 0;
-    background: white;
-    min-width: 220px;
-    border-radius: 8px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fc 100%);
+    min-width: 240px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(25, 55, 109, 0.15), 0 4px 10px rgba(25, 55, 109, 0.08);
     list-style: none;
     opacity: 0;
     visibility: hidden;
     /* Initial transform removed - JavaScript will handle all transforms */
     transform: translateY(-5px) scale(0.95);
     z-index: 999;
-    border-top: 3px solid #764ba2;
-    padding: 10px 0;
+    border-top: 4px solid #19376d;
+    border: 1px solid rgba(25, 55, 109, 0.08);
+    padding: 12px 0;
 }
 
 .esprit-menu__item--has-dropdown:hover .esprit-dropdown {
@@ -252,16 +267,23 @@ body {
 }
 
 .esprit-dropdown__link {
-    color: #666;
+    color: #4a5568;
     text-decoration: none;
-    padding: 12px 20px;
+    padding: 14px 24px;
     display: block;
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
+    font-weight: 500;
+    font-size: 14px;
+    border-left: 3px solid transparent;
+    position: relative;
 }
 
 .esprit-dropdown__link:hover {
-    color: #764ba2;
-    background-color: rgba(118, 75, 162, 0.08);
+    color: #19376d;
+    background: linear-gradient(135deg, rgba(25, 55, 109, 0.08) 0%, rgba(74, 144, 164, 0.05) 100%);
+    border-left: 3px solid #0b5394;
+    transform: translateX(2px);
+    box-shadow: 0 2px 6px rgba(25, 55, 109, 0.08);
 }
 
 /* Mobile Menu Toggle */

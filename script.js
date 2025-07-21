@@ -122,14 +122,22 @@ class EspritMegaMenu {
         
         // Get horizontal offset after positioning calculation
         const horizontalOffset = megaMenu.getAttribute('data-horizontal-offset') || '0';
+        const isPositionAdjusted = megaMenu.getAttribute('data-position-adjusted') === 'true';
         
-        // Set initial state and enable transition
-        megaMenu.style.transition = 'all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)';
-        
-        // Apply final transform with animation
-        requestAnimationFrame(() => {
+        if (isPositionAdjusted) {
+            // When smart positioning is applied, set position immediately without horizontal animation
+            megaMenu.style.transition = 'opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease';
             megaMenu.style.transform = `translateX(${horizontalOffset}px) translateY(0) scale(1)`;
-        });
+            console.log('🎯 Smart positioning applied - no horizontal slide animation');
+        } else {
+            // Normal animation with transition
+            megaMenu.style.transition = 'all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)';
+            
+            // Apply final transform with animation
+            requestAnimationFrame(() => {
+                megaMenu.style.transform = `translateX(${horizontalOffset}px) translateY(0) scale(1)`;
+            });
+        }
         
         // Store reference
         this.activeMegaMenu = { item, megaMenu };
@@ -246,14 +254,22 @@ class EspritMegaMenu {
         
         // Get horizontal offset after positioning calculation
         const horizontalOffset = dropdown.getAttribute('data-horizontal-offset') || '0';
+        const isPositionAdjusted = dropdown.getAttribute('data-position-adjusted') === 'true';
         
-        // Set initial state and enable transition
-        dropdown.style.transition = 'all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)';
-        
-        // Apply final transform with animation
-        requestAnimationFrame(() => {
+        if (isPositionAdjusted) {
+            // When smart positioning is applied, set position immediately without horizontal animation
+            dropdown.style.transition = 'opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease';
             dropdown.style.transform = `translateX(${horizontalOffset}px) translateY(0) scale(1)`;
-        });
+            console.log('🎯 Smart positioning applied to dropdown - no horizontal slide animation');
+        } else {
+            // Normal animation with transition
+            dropdown.style.transition = 'all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1)';
+            
+            // Apply final transform with animation
+            requestAnimationFrame(() => {
+                dropdown.style.transform = `translateX(${horizontalOffset}px) translateY(0) scale(1)`;
+            });
+        }
         
         // Store reference
         this.activeDropdown = { item, dropdown };
