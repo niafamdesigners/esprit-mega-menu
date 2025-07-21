@@ -1,0 +1,208 @@
+{
+  "menuData": {
+    "logo": {
+      "text": "لوگو",
+      "url": "#"
+    },
+    "items": [
+      {
+        "id": "home",
+        "title": "خانه",
+        "url": "#",
+        "type": "simple"
+      },
+      {
+        "id": "products",
+        "title": "محصولات",
+        "url": "#",
+        "type": "mega",
+        "columns": [
+          {
+            "title": "لپ‌تاپ و کامپیوتر",
+            "items": [
+              {
+                "title": "لپ‌تاپ گیمینگ",
+                "url": "#gaming-laptops"
+              },
+              {
+                "title": "لپ‌تاپ اداری",
+                "url": "#office-laptops"
+              },
+              {
+                "title": "کامپیوتر رومیزی",
+                "url": "#desktop-computers"
+              },
+              {
+                "title": "مانیتور",
+                "url": "#monitors"
+              }
+            ]
+          },
+          {
+            "title": "موبایل و تبلت",
+            "items": [
+              {
+                "title": "گوشی هوشمند",
+                "url": "#smartphones"
+              },
+              {
+                "title": "تبلت",
+                "url": "#tablets"
+              },
+              {
+                "title": "لوازم جانبی",
+                "url": "#accessories"
+              },
+              {
+                "title": "کیف و محافظ",
+                "url": "#cases"
+              }
+            ]
+          },
+          {
+            "title": "لوازم خانگی",
+            "items": [
+              {
+                "title": "یخچال و فریزر",
+                "url": "#refrigerators"
+              },
+              {
+                "title": "ماشین لباسشویی",
+                "url": "#washing-machines"
+              },
+              {
+                "title": "تلویزیون",
+                "url": "#televisions"
+              },
+              {
+                "title": "کولر و پنکه",
+                "url": "#cooling"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "services",
+        "title": "خدمات",
+        "url": "#",
+        "type": "dropdown",
+        "items": [
+          {
+            "title": "تعمیرات",
+            "url": "#repairs"
+          },
+          {
+            "title": "نصب و راه‌اندازی",
+            "url": "#installation"
+          },
+          {
+            "title": "مشاوره فنی",
+            "url": "#consultation"
+          },
+          {
+            "title": "گارانتی",
+            "url": "#warranty"
+          }
+        ]
+      },
+      {
+        "id": "about",
+        "title": "درباره ما",
+        "url": "#",
+        "type": "mega",
+        "columns": [
+          {
+            "title": "شرکت",
+            "items": [
+              {
+                "title": "تاریخچه",
+                "url": "#history"
+              },
+              {
+                "title": "مأموریت ما",
+                "url": "#mission"
+              },
+              {
+                "title": "تیم مدیریت",
+                "url": "#management"
+              },
+              {
+                "title": "جوایز و افتخارات",
+                "url": "#awards"
+              }
+            ]
+          },
+          {
+            "title": "فرصت‌های شغلی",
+            "items": [
+              {
+                "title": "موقعیت‌های باز",
+                "url": "#jobs"
+              },
+              {
+                "title": "فرهنگ سازمانی",
+                "url": "#culture"
+              },
+              {
+                "title": "مزایا",
+                "url": "#benefits"
+              },
+              {
+                "title": "ارسال رزومه",
+                "url": "#apply"
+              }
+            ]
+          },
+          {
+            "title": "اخبار و رویدادها",
+            "items": [
+              {
+                "title": "آخرین اخبار",
+                "url": "#news"
+              },
+              {
+                "title": "رویدادهای آینده",
+                "url": "#events"
+              },
+              {
+                "title": "مطبوعات",
+                "url": "#press"
+              },
+              {
+                "title": "وبلاگ",
+                "url": "#blog"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "contact",
+        "title": "تماس با ما",
+        "url": "#contact",
+        "type": "simple"
+      },
+      {
+        "id": "support",
+        "title": "پشتیبانی",
+        "url": "#",
+        "type": "dropdown",
+        "items": [
+          {
+            "title": "سوالات متداول",
+            "url": "#faq"
+          },
+          {
+            "title": "تیکت پشتیبانی",
+            "url": "#ticket"
+          },
+          {
+            "title": "راهنمای خرید",
+            "url": "#guide"
+          }
+        ]
+      }
+    ]
+  }
+}
