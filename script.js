@@ -102,14 +102,14 @@ class EspritMegaMenu {
 
         // Handle window resize
         window.addEventListener('resize', () => {
-            if (window.innerWidth > 767.98 && this.isMobileMenuOpen) {
+            if (window.innerWidth > 991.98 && this.isMobileMenuOpen) {
                 this.closeMobileMenu();
             }
         });
     }
 
     showMegaMenu(item, megaMenu) {
-        if (window.innerWidth <= 768) return; // Skip on mobile
+        if (window.innerWidth <= 991) return; // Skip on mobile
         
         // Close other menus
         this.closeAllMenus();
@@ -125,7 +125,7 @@ class EspritMegaMenu {
     }
 
     hideMegaMenu(item, megaMenu) {
-        if (window.innerWidth <= 768) return; // Skip on mobile
+        if (window.innerWidth <= 991) return; // Skip on mobile
         
         // Remove active class
         item.classList.remove('esprit-menu__item--active');
@@ -137,7 +137,7 @@ class EspritMegaMenu {
     }
 
     showDropdown(item, dropdown) {
-        if (window.innerWidth <= 768) return; // Skip on mobile
+        if (window.innerWidth <= 991) return; // Skip on mobile
         
         // Close other menus
         this.closeAllMenus();
@@ -153,7 +153,7 @@ class EspritMegaMenu {
     }
 
     hideDropdown(item, dropdown) {
-        if (window.innerWidth <= 768) return; // Skip on mobile
+        if (window.innerWidth <= 991) return; // Skip on mobile
         
         // Remove active class
         item.classList.remove('esprit-menu__item--active');
@@ -214,7 +214,7 @@ class EspritMegaMenu {
             
             if ((hasMega || hasDropdown) && link) {
                 link.addEventListener('click', (e) => {
-                    if (window.innerWidth <= 767.98) {
+                    if (window.innerWidth <= 991.98) {
                         e.preventDefault();
                         this.openMobileSubmenu(item);
                     }
@@ -247,6 +247,9 @@ class EspritMegaMenu {
             console.error('❌ Menu element not found!');
             return;
         }
+        
+        // Add mobile menu header
+        this.addMobileMenuHeader();
         
         // Check for any active submenus BEFORE opening main menu
         const activeSubmenus = document.querySelectorAll('.esprit-mega-menu--active, .esprit-dropdown--active');
@@ -300,6 +303,47 @@ class EspritMegaMenu {
         console.log('📂 Mobile menu opened successfully');
     }
 
+    addMobileMenuHeader() {
+        // Remove existing header if any
+        const existingHeader = this.menu.querySelector('.esprit-mobile-menu-header');
+        if (existingHeader) {
+            existingHeader.remove();
+        }
+        
+        // Create mobile menu header
+        const header = document.createElement('div');
+        header.className = 'esprit-mobile-menu-header';
+        
+        // Create title
+        const title = document.createElement('h3');
+        title.className = 'esprit-mobile-menu-title';
+        title.textContent = 'منوی اصلی';
+        
+        // Create close button
+        const closeButton = document.createElement('button');
+        closeButton.className = 'esprit-mobile-menu-close';
+        closeButton.innerHTML = `
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 5L5 15M5 5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        `;
+        closeButton.setAttribute('aria-label', 'بستن منو');
+        
+        // Add click event to close button
+        closeButton.addEventListener('click', () => {
+            this.closeMobileMenu();
+        });
+        
+        // Append elements to header
+        header.appendChild(title);
+        header.appendChild(closeButton);
+        
+        // Insert header at the beginning of menu
+        this.menu.insertBefore(header, this.menu.firstChild);
+        
+        console.log('✅ Mobile menu header added');
+    }
+    
     closeMobileMenu() {
         console.log('📁 closeMobileMenu called');
         
@@ -332,13 +376,16 @@ class EspritMegaMenu {
             });
         }
         
-        // Restore body scroll
-        console.log('✅ Restoring body scroll');
-        document.body.classList.remove('esprit-menu-open');
+        // Remove mobile menu header
+        const header = this.menu.querySelector('.esprit-mobile-menu-header');
+        if (header) {
+            header.remove();
+            console.log('✅ Mobile menu header removed');
+        }
         
-        // Close all mobile submenus
-        console.log('📁 Closing all mobile submenus');
-        this.closeAllMobileSubmenus();
+        // Allow body scroll
+        console.log('✅ Allowing body scroll');
+        document.body.classList.remove('esprit-menu-open');
         
         console.log('📁 Mobile menu closed successfully');
     }
