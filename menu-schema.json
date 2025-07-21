@@ -1,205 +1,209 @@
 {
   "menuData": {
     "logo": {
-      "text": "لوگو",
+      "text": "دانشگاه اصفهان",
       "url": "#"
     },
     "items": [
       {
         "id": "home",
-        "title": "خانه",
+        "title": "صفحه اصلی دانشگاه",
         "url": "#",
         "type": "simple"
       },
       {
-        "id": "products",
-        "title": "محصولات",
+        "id": "academics",
+        "title": "آموزش و تحصیلات تکمیلی",
         "url": "#",
         "type": "mega",
         "columns": [
           {
-            "title": "لپ‌تاپ و کامپیوتر",
+            "title": "دانشکده‌های فنی و مهندسی",
             "items": [
               {
-                "title": "لپ‌تاپ گیمینگ",
-                "url": "#gaming-laptops"
+                "title": "مهندسی کامپیوتر و فناوری اطلاعات",
+                "url": "#computer-engineering"
               },
               {
-                "title": "لپ‌تاپ اداری",
-                "url": "#office-laptops"
+                "title": "مهندسی برق و الکترونیک",
+                "url": "#electrical-engineering"
               },
               {
-                "title": "کامپیوتر رومیزی",
-                "url": "#desktop-computers"
+                "title": "مهندسی عمران و زیرساخت",
+                "url": "#civil-engineering"
               },
               {
-                "title": "مانیتور",
-                "url": "#monitors"
+                "title": "مهندسی مکانیک و ساخت و تولید",
+                "url": "#mechanical-engineering"
               }
             ]
           },
           {
-            "title": "موبایل و تبلت",
+            "title": "علوم انسانی و اجتماعی",
             "items": [
               {
-                "title": "گوشی هوشمند",
-                "url": "#smartphones"
+                "title": "ادبیات فارسی و زبان‌شناسی",
+                "url": "#persian-literature"
               },
               {
-                "title": "تبلت",
-                "url": "#tablets"
+                "title": "تاریخ و باستان‌شناسی ایران",
+                "url": "#history-archaeology"
               },
               {
-                "title": "لوازم جانبی",
-                "url": "#accessories"
+                "title": "روان‌شناسی و علوم تربیتی",
+                "url": "#psychology-education"
               },
               {
-                "title": "کیف و محافظ",
-                "url": "#cases"
+                "title": "جامعه‌شناسی و مطالعات اجتماعی",
+                "url": "#sociology"
               }
             ]
           },
           {
-            "title": "لوازم خانگی",
+            "title": "علوم پایه و کاربردی",
             "items": [
               {
-                "title": "یخچال و فریزر",
-                "url": "#refrigerators"
+                "title": "ریاضیات محض و کاربردی",
+                "url": "#mathematics"
               },
               {
-                "title": "ماشین لباسشویی",
-                "url": "#washing-machines"
+                "title": "فیزیک نظری و تجربی",
+                "url": "#physics"
               },
               {
-                "title": "تلویزیون",
-                "url": "#televisions"
+                "title": "شیمی و مواد پیشرفته",
+                "url": "#chemistry"
               },
               {
-                "title": "کولر و پنکه",
-                "url": "#cooling"
+                "title": "زیست‌شناسی و بیوتکنولوژی",
+                "url": "#biology"
               }
             ]
           }
         ]
       },
       {
-        "id": "services",
-        "title": "خدمات",
+        "id": "research",
+        "title": "پژوهش و نوآوری",
         "url": "#",
         "type": "dropdown",
         "items": [
           {
-            "title": "تعمیرات",
-            "url": "#repairs"
+            "title": "مراکز تحقیقاتی و آزمایشگاه‌های تخصصی",
+            "url": "#research-centers"
           },
           {
-            "title": "نصب و راه‌اندازی",
-            "url": "#installation"
+            "title": "پروژه‌های ملی و بین‌المللی",
+            "url": "#international-projects"
           },
           {
-            "title": "مشاوره فنی",
-            "url": "#consultation"
+            "title": "انتشارات علمی و مجلات معتبر",
+            "url": "#publications"
           },
           {
-            "title": "گارانتی",
-            "url": "#warranty"
+            "title": "همکاری‌های صنعتی و فناوری",
+            "url": "#industry-collaboration"
           }
         ]
       },
       {
-        "id": "about",
-        "title": "درباره ما",
+        "id": "about-university",
+        "title": "معرفی دانشگاه اصفهان",
         "url": "#",
         "type": "mega",
         "columns": [
           {
-            "title": "شرکت",
+            "title": "تاریخچه و هویت دانشگاه",
             "items": [
               {
-                "title": "تاریخچه",
-                "url": "#history"
+                "title": "تاریخچه تأسیس و تحول دانشگاه",
+                "url": "#university-history"
               },
               {
-                "title": "مأموریت ما",
-                "url": "#mission"
+                "title": "مأموریت و چشم‌انداز آینده",
+                "url": "#mission-vision"
               },
               {
-                "title": "تیم مدیریت",
-                "url": "#management"
+                "title": "مدیریت و ساختار سازمانی",
+                "url": "#management-structure"
               },
               {
-                "title": "جوایز و افتخارات",
-                "url": "#awards"
+                "title": "افتخارات و رتبه‌بندی‌های ملی",
+                "url": "#achievements-rankings"
               }
             ]
           },
           {
-            "title": "فرصت‌های شغلی",
+            "title": "زیرساخت‌ها و امکانات",
             "items": [
               {
-                "title": "موقعیت‌های باز",
-                "url": "#jobs"
+                "title": "کتابخانه مرکزی و منابع دیجیتال",
+                "url": "#central-library"
               },
               {
-                "title": "فرهنگ سازمانی",
-                "url": "#culture"
+                "title": "خوابگاه‌ها و رفاه دانشجویی",
+                "url": "#dormitories-welfare"
               },
               {
-                "title": "مزایا",
-                "url": "#benefits"
+                "title": "مراکز ورزشی و تفریحی",
+                "url": "#sports-recreation"
               },
               {
-                "title": "ارسال رزومه",
-                "url": "#apply"
+                "title": "درمانگاه و خدمات بهداشتی",
+                "url": "#health-services"
               }
             ]
           },
           {
-            "title": "اخبار و رویدادها",
+            "title": "اخبار و رویدادهای دانشگاه",
             "items": [
               {
-                "title": "آخرین اخبار",
-                "url": "#news"
+                "title": "آخرین اخبار و اطلاعیه‌ها",
+                "url": "#latest-news"
               },
               {
-                "title": "رویدادهای آینده",
-                "url": "#events"
+                "title": "همایش‌ها و کنفرانس‌های علمی",
+                "url": "#conferences-seminars"
               },
               {
-                "title": "مطبوعات",
-                "url": "#press"
+                "title": "فعالیت‌های فرهنگی و هنری",
+                "url": "#cultural-activities"
               },
               {
-                "title": "وبلاگ",
-                "url": "#blog"
+                "title": "مجله و نشریات دانشگاه",
+                "url": "#university-publications"
               }
             ]
           }
         ]
       },
       {
-        "id": "contact",
-        "title": "تماس با ما",
-        "url": "#contact",
+        "id": "student-services",
+        "title": "خدمات دانشجویی و آموزشی",
+        "url": "#student-services",
         "type": "simple"
       },
       {
-        "id": "support",
-        "title": "پشتیبانی",
+        "id": "support-contact",
+        "title": "پشتیبانی و ارتباط با دانشگاه",
         "url": "#",
         "type": "dropdown",
         "items": [
           {
-            "title": "سوالات متداول",
-            "url": "#faq"
+            "title": "راهنمای سیستم‌های آموزشی",
+            "url": "#educational-systems-guide"
           },
           {
-            "title": "تیکت پشتیبانی",
-            "url": "#ticket"
+            "title": "پشتیبانی فنی و IT دانشگاه",
+            "url": "#technical-support"
           },
           {
-            "title": "راهنمای خرید",
-            "url": "#guide"
+            "title": "دفتر روابط عمومی و اطلاع‌رسانی",
+            "url": "#public-relations"
+          },
+          {
+            "title": "تماس با واحدهای مختلف دانشگاه",
+            "url": "#contact-departments"
           }
         ]
       }
