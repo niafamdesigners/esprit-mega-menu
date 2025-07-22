@@ -1,9 +1,5 @@
 {
   "menuData": {
-    "logo": {
-      "text": "دانشگاه اصفهان",
-      "url": "https://www.ui.ac.ir"
-    },
     "items": [
       {
         "id": "about-university",
