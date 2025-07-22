@@ -4,134 +4,138 @@
  */
 
 class EspritDynamicMenu {
-    constructor(containerSelector = '.esprit-nav__container') {
-        this.container = document.querySelector(containerSelector);
-        this.menuData = null;
-        this.generatedMenu = null;
+  constructor(containerSelector = ".esprit-nav__container") {
+    this.container = document.querySelector(containerSelector);
+    this.menuData = null;
+    this.generatedMenu = null;
+  }
+
+  /**
+   * Load menu data from JSON
+   * @param {Object|string} data - JSON object or URL to JSON file
+   */
+  async loadMenuData(data) {
+    try {
+      if (typeof data === "string") {
+        // If data is a URL, fetch it
+        const response = await fetch(data);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        this.menuData = await response.json();
+      } else {
+        // If data is an object, use it directly
+        this.menuData = data;
+      }
+
+      console.log("✅ داده‌های منو بارگذاری شد:", this.menuData);
+      return this.menuData;
+    } catch (error) {
+      console.error("❌ خطا در بارگذاری داده‌های منو:", error);
+      throw error;
+    }
+  }
+
+  /**
+   * Generate menu HTML from loaded data
+   */
+  generateMenu() {
+    if (!this.menuData || !this.menuData.menuData) {
+      throw new Error("داده‌های منو بارگذاری نشده است");
     }
 
-    /**
-     * Load menu data from JSON
-     * @param {Object|string} data - JSON object or URL to JSON file
-     */
-    async loadMenuData(data) {
-        try {
-            if (typeof data === 'string') {
-                // If data is a URL, fetch it
-                const response = await fetch(data);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                this.menuData = await response.json();
-            } else {
-                // If data is an object, use it directly
-                this.menuData = data;
-            }
-            
-            console.log('✅ داده‌های منو بارگذاری شد:', this.menuData);
-            return this.menuData;
-        } catch (error) {
-            console.error('❌ خطا در بارگذاری داده‌های منو:', error);
-            throw error;
-        }
-    }
+    const { logo, items } = this.menuData.menuData;
 
-    /**
-     * Generate menu HTML from loaded data
-     */
-    generateMenu() {
-        if (!this.menuData || !this.menuData.menuData) {
-            throw new Error('داده‌های منو بارگذاری نشده است');
-        }
+    // Clear existing content
+    this.container.innerHTML = "";
 
-        const { logo, items } = this.menuData.menuData;
+    // Generate logo
+    const logoHTML = this.generateLogo(logo);
 
-        // Clear existing content
-        this.container.innerHTML = '';
+    // Generate menu items
+    const menuHTML = this.generateMenuItems(items);
 
-        // Generate logo
-        const logoHTML = this.generateLogo(logo);
-        
-        // Generate menu items
-        const menuHTML = this.generateMenuItems(items);
-        
-        // Generate mobile toggle
-        const toggleHTML = this.generateMobileToggle();
+    // Generate mobile toggle
+    const toggleHTML = this.generateMobileToggle();
 
-        // Combine all parts
-        this.container.innerHTML = `
+    // Combine all parts
+    this.container.innerHTML = `
             ${logoHTML}
             ${menuHTML}
             ${toggleHTML}
         `;
 
-        console.log('✅ منو با موفقیت تولید شد');
-        
-        // Re-initialize menu functionality
-        this.initializeMenu();
-        
-        return this.container;
-    }
+    console.log("✅ منو با موفقیت تولید شد");
 
-    /**
-     * Generate logo HTML
-     */
-    generateLogo(logo) {
-        return `
+    // Re-initialize menu functionality
+    this.initializeMenu();
+
+    return this.container;
+  }
+
+  /**
+   * Generate logo HTML
+   */
+  generateLogo(logo) {
+    return `
             <div class="esprit-nav__logo">
                 <a href="${logo.url}" class="esprit-nav__logo-link">${logo.text}</a>
             </div>
         `;
-    }
+  }
 
-    /**
-     * Generate menu items HTML
-     */
-    generateMenuItems(items) {
-        const menuItemsHTML = items.map(item => this.generateMenuItem(item)).join('');
-        
-        return `
+  /**
+   * Generate menu items HTML
+   */
+  generateMenuItems(items) {
+    const menuItemsHTML = items
+      .map((item) => this.generateMenuItem(item))
+      .join("");
+
+    return `
             <ul class="esprit-menu">
                 ${menuItemsHTML}
             </ul>
         `;
-    }
+  }
 
-    /**
-     * Generate single menu item HTML
-     */
-    generateMenuItem(item) {
-        switch (item.type) {
-            case 'simple':
-                return this.generateSimpleItem(item);
-            case 'mega':
-                return this.generateMegaItem(item);
-            case 'dropdown':
-                return this.generateDropdownItem(item);
-            default:
-                console.warn(`نوع منوی نامشخص: ${item.type}`);
-                return this.generateSimpleItem(item);
-        }
+  /**
+   * Generate single menu item HTML
+   */
+  generateMenuItem(item) {
+    switch (item.type) {
+      case "simple":
+        return this.generateSimpleItem(item);
+      case "mega":
+        return this.generateMegaItem(item);
+      case "dropdown":
+        return this.generateDropdownItem(item);
+      default:
+        console.warn(`نوع منوی نامشخص: ${item.type}`);
+        return this.generateSimpleItem(item);
     }
+  }
 
-    /**
-     * Generate simple menu item
-     */
-    generateSimpleItem(item) {
-        return `
+  /**
+   * Generate simple menu item
+   */
+  generateSimpleItem(item) {
+    return `
             <li class="esprit-menu__item" data-menu-id="${item.id}">
                 <a href="${item.url}" class="esprit-menu__link">${item.title}</a>
             </li>
         `;
-    }
+  }
 
-    /**
-     * Generate mega menu item
-     */
-    generateMegaItem(item) {
-        const columnsHTML = item.columns.map(column => this.generateMegaColumn(column)).join('');
-        
-        return `
+  /**
+   * Generate mega menu item
+   */
+  generateMegaItem(item) {
+    const columnsHTML = item.columns
+      .map((column) => this.generateMegaColumn(column))
+      .join("");
+
+    return `
             <li class="esprit-menu__item esprit-menu__item--has-mega" data-menu-id="${item.id}">
                 <a href="${item.url}" class="esprit-menu__link">
                     ${item.title}
@@ -148,19 +152,23 @@ class EspritDynamicMenu {
                 </div>
             </li>
         `;
-    }
+  }
 
-    /**
-     * Generate mega menu column
-     */
-    generateMegaColumn(column) {
-        const itemsHTML = column.items.map(item => `
+  /**
+   * Generate mega menu column
+   */
+  generateMegaColumn(column) {
+    const itemsHTML = column.items
+      .map(
+        (item) => `
             <li class="esprit-mega-menu__item">
                 <a href="${item.url}" class="esprit-mega-menu__link">${item.title}</a>
             </li>
-        `).join('');
+        `
+      )
+      .join("");
 
-        return `
+    return `
             <div class="esprit-mega-menu__column">
                 <h3 class="esprit-mega-menu__title">${column.title}</h3>
                 <ul class="esprit-mega-menu__list">
@@ -168,19 +176,23 @@ class EspritDynamicMenu {
                 </ul>
             </div>
         `;
-    }
+  }
 
-    /**
-     * Generate dropdown menu item
-     */
-    generateDropdownItem(item) {
-        const itemsHTML = item.items.map(subItem => `
+  /**
+   * Generate dropdown menu item
+   */
+  generateDropdownItem(item) {
+    const itemsHTML = item.items
+      .map(
+        (subItem) => `
             <li class="esprit-dropdown__item">
                 <a href="${subItem.url}" class="esprit-dropdown__link">${subItem.title}</a>
             </li>
-        `).join('');
+        `
+      )
+      .join("");
 
-        return `
+    return `
             <li class="esprit-menu__item esprit-menu__item--has-dropdown" data-menu-id="${item.id}">
                 <a href="${item.url}" class="esprit-menu__link">
                     ${item.title}
@@ -195,232 +207,260 @@ class EspritDynamicMenu {
                 </ul>
             </li>
         `;
-    }
+  }
 
-    /**
-     * Generate mobile toggle button
-     */
-    generateMobileToggle() {
-        return `
+  /**
+   * Generate mobile toggle button
+   */
+  generateMobileToggle() {
+    return `
             <div class="esprit-nav__toggle">
                 <span class="esprit-nav__toggle-line"></span>
                 <span class="esprit-nav__toggle-line"></span>
                 <span class="esprit-nav__toggle-line"></span>
             </div>
         `;
-    }
+  }
 
-    /**
-     * Initialize menu functionality after generation
-     */
-    initializeMenu() {
-        console.log('🔄 Dynamic Menu: Initializing menu functionality...');
-        
-        // Wait for DOM to be ready, then initialize
+  /**
+   * Initialize menu functionality after generation
+   */
+  initializeMenu() {
+    console.log("🔄 Dynamic Menu: Initializing menu functionality...");
+
+    // Wait for DOM to be ready, then initialize
+    setTimeout(() => {
+      console.log("🔍 Dynamic Menu: Checking for EspritMegaMenu class...");
+      console.log("  - typeof EspritMegaMenu:", typeof EspritMegaMenu);
+      console.log("  - window.EspritMegaMenu:", typeof window.EspritMegaMenu);
+
+      // Re-initialize the main menu class
+      if (typeof EspritMegaMenu !== "undefined" || window.EspritMegaMenu) {
+        console.log(
+          "✅ Dynamic Menu: EspritMegaMenu class found, creating NEW instance..."
+        );
+
+        // Destroy existing instance if it exists
+        if (window.espritMenu) {
+          console.log("🗑️ Dynamic Menu: Destroying existing menu instance...");
+          window.espritMenu = null;
+        }
+
+        // Use global EspritMegaMenu class
+        const MenuClass = window.EspritMegaMenu || EspritMegaMenu;
+        this.generatedMenu = new MenuClass();
+
+        // Replace the global instance
+        window.espritMenu = this.generatedMenu;
+        window.dynamicEspritMenu = this.generatedMenu;
+        console.log(
+          "🌍 Dynamic Menu: New instance attached to window.espritMenu and window.dynamicEspritMenu"
+        );
+
+        // Test elements after initialization
+        console.log("🔍 Dynamic Menu: Testing elements after initialization:");
+        console.log("  - nav:", this.generatedMenu.nav ? "✅" : "❌");
+        console.log("  - menu:", this.generatedMenu.menu ? "✅" : "❌");
+        console.log(
+          "  - menuToggle:",
+          this.generatedMenu.menuToggle ? "✅" : "❌"
+        );
+        console.log("  - menuItems:", this.generatedMenu.menuItems.length);
+
+        // Force mobile menu to be closed after initialization
         setTimeout(() => {
-            console.log('🔍 Dynamic Menu: Checking for EspritMegaMenu class...');
-            console.log('  - typeof EspritMegaMenu:', typeof EspritMegaMenu);
-            console.log('  - window.EspritMegaMenu:', typeof window.EspritMegaMenu);
-            
-            // Re-initialize the main menu class
-            if (typeof EspritMegaMenu !== 'undefined' || window.EspritMegaMenu) {
-                console.log('✅ Dynamic Menu: EspritMegaMenu class found, creating NEW instance...');
-                
-                // Destroy existing instance if it exists
-                if (window.espritMenu) {
-                    console.log('🗑️ Dynamic Menu: Destroying existing menu instance...');
-                    window.espritMenu = null;
-                }
-                
-                // Use global EspritMegaMenu class
-                const MenuClass = window.EspritMegaMenu || EspritMegaMenu;
-                this.generatedMenu = new MenuClass();
-                
-                // Replace the global instance
-                window.espritMenu = this.generatedMenu;
-                window.dynamicEspritMenu = this.generatedMenu;
-                console.log('🌍 Dynamic Menu: New instance attached to window.espritMenu and window.dynamicEspritMenu');
-                
-                // Test elements after initialization
-                console.log('🔍 Dynamic Menu: Testing elements after initialization:');
-                console.log('  - nav:', this.generatedMenu.nav ? '✅' : '❌');
-                console.log('  - menu:', this.generatedMenu.menu ? '✅' : '❌');
-                console.log('  - menuToggle:', this.generatedMenu.menuToggle ? '✅' : '❌');
-                console.log('  - menuItems:', this.generatedMenu.menuItems.length);
-                
-                // Force mobile menu to be closed after initialization
-                setTimeout(() => {
-                    if (this.generatedMenu && this.generatedMenu.ensureMobileMenuClosed) {
-                        console.log('🔒 Dynamic Menu: Ensuring mobile menu is closed...');
-                        this.generatedMenu.ensureMobileMenuClosed();
-                    }
-                    
-                    // Test hamburger button for dynamic menu
-                    const toggle = document.querySelector('.esprit-nav__toggle');
-                    console.log('🔍 Dynamic Menu: Final hamburger button test:');
-                    console.log('  - Element found:', toggle ? '✅' : '❌');
-                    if (toggle) {
-                        console.log('  - Element classes:', toggle.className);
-                        console.log('  - Has event listeners:', toggle._eventListeners ? 'Yes' : 'Unknown');
-                        console.log('✅ Dynamic Menu: Hamburger button is ready for user interaction');
-                        
-                        // DO NOT auto-click - let user click manually
-                        // toggle.click(); // REMOVED: This was causing auto-open
-                    }
-                }, 100);
-                
-            } else {
-                console.error('❌ Dynamic Menu: EspritMegaMenu class not found!');
-                console.log('  - Available window properties:', Object.keys(window).filter(k => k.includes('Esprit')));
-            }
-            
-            // Ensure mobile overlay exists for push/slide functionality
-            this.ensureMobileOverlay();
-            console.log('✅ Dynamic Menu: Initialization complete');
-            
-        }, 100); // Increased delay to ensure scripts are loaded
+          if (this.generatedMenu && this.generatedMenu.ensureMobileMenuClosed) {
+            console.log("🔒 Dynamic Menu: Ensuring mobile menu is closed...");
+            this.generatedMenu.ensureMobileMenuClosed();
+          }
+
+          // Test hamburger button for dynamic menu
+          const toggle = document.querySelector(".esprit-nav__toggle");
+          console.log("🔍 Dynamic Menu: Final hamburger button test:");
+          console.log("  - Element found:", toggle ? "✅" : "❌");
+          if (toggle) {
+            console.log("  - Element classes:", toggle.className);
+            console.log(
+              "  - Has event listeners:",
+              toggle._eventListeners ? "Yes" : "Unknown"
+            );
+            console.log(
+              "✅ Dynamic Menu: Hamburger button is ready for user interaction"
+            );
+
+            // DO NOT auto-click - let user click manually
+            // toggle.click(); // REMOVED: This was causing auto-open
+          }
+        }, 100);
+      } else {
+        console.error("❌ Dynamic Menu: EspritMegaMenu class not found!");
+        console.log(
+          "  - Available window properties:",
+          Object.keys(window).filter((k) => k.includes("Esprit"))
+        );
+      }
+
+      // Ensure mobile overlay exists for push/slide functionality
+      this.ensureMobileOverlay();
+      console.log("✅ Dynamic Menu: Initialization complete");
+    }, 100); // Increased delay to ensure scripts are loaded
+  }
+
+  /**
+   * Ensure mobile overlay exists for push/slide menu
+   */
+  ensureMobileOverlay() {
+    if (!document.querySelector(".esprit-menu-overlay")) {
+      const overlay = document.createElement("div");
+      overlay.className = "esprit-menu-overlay";
+      document.body.appendChild(overlay);
     }
-    
-    /**
-     * Ensure mobile overlay exists for push/slide menu
-     */
-    ensureMobileOverlay() {
-        if (!document.querySelector('.esprit-menu-overlay')) {
-            const overlay = document.createElement('div');
-            overlay.className = 'esprit-menu-overlay';
-            document.body.appendChild(overlay);
-        }
+  }
+
+  /**
+   * Update specific menu item
+   */
+  updateMenuItem(itemId, newData) {
+    if (!this.menuData || !this.menuData.menuData) {
+      throw new Error("داده‌های منو بارگذاری نشده است");
     }
 
-    /**
-     * Update specific menu item
-     */
-    updateMenuItem(itemId, newData) {
-        if (!this.menuData || !this.menuData.menuData) {
-            throw new Error('داده‌های منو بارگذاری نشده است');
-        }
-
-        const itemIndex = this.menuData.menuData.items.findIndex(item => item.id === itemId);
-        if (itemIndex === -1) {
-            throw new Error(`آیتم منو با شناسه ${itemId} یافت نشد`);
-        }
-
-        // Update the data
-        this.menuData.menuData.items[itemIndex] = { ...this.menuData.menuData.items[itemIndex], ...newData };
-        
-        // Regenerate menu
-        this.generateMenu();
-        
-        console.log(`✅ آیتم منو ${itemId} به‌روزرسانی شد`);
+    const itemIndex = this.menuData.menuData.items.findIndex(
+      (item) => item.id === itemId
+    );
+    if (itemIndex === -1) {
+      throw new Error(`آیتم منو با شناسه ${itemId} یافت نشد`);
     }
 
-    /**
-     * Add new menu item
-     */
-    addMenuItem(newItem, position = -1) {
-        if (!this.menuData || !this.menuData.menuData) {
-            throw new Error('داده‌های منو بارگذاری نشده است');
-        }
+    // Update the data
+    this.menuData.menuData.items[itemIndex] = {
+      ...this.menuData.menuData.items[itemIndex],
+      ...newData,
+    };
 
-        if (position === -1) {
-            this.menuData.menuData.items.push(newItem);
-        } else {
-            this.menuData.menuData.items.splice(position, 0, newItem);
-        }
+    // Regenerate menu
+    this.generateMenu();
 
-        // Regenerate menu
-        this.generateMenu();
-        
-        console.log(`✅ آیتم منو جدید اضافه شد:`, newItem);
+    console.log(`✅ آیتم منو ${itemId} به‌روزرسانی شد`);
+  }
+
+  /**
+   * Add new menu item
+   */
+  addMenuItem(newItem, position = -1) {
+    if (!this.menuData || !this.menuData.menuData) {
+      throw new Error("داده‌های منو بارگذاری نشده است");
     }
 
-    /**
-     * Remove menu item
-     */
-    removeMenuItem(itemId) {
-        if (!this.menuData || !this.menuData.menuData) {
-            throw new Error('داده‌های منو بارگذاری نشده است');
-        }
-
-        const itemIndex = this.menuData.menuData.items.findIndex(item => item.id === itemId);
-        if (itemIndex === -1) {
-            throw new Error(`آیتم منو با شناسه ${itemId} یافت نشد`);
-        }
-
-        this.menuData.menuData.items.splice(itemIndex, 1);
-        
-        // Regenerate menu
-        this.generateMenu();
-        
-        console.log(`✅ آیتم منو ${itemId} حذف شد`);
+    if (position === -1) {
+      this.menuData.menuData.items.push(newItem);
+    } else {
+      this.menuData.menuData.items.splice(position, 0, newItem);
     }
 
-    /**
-     * Get current menu data
-     */
-    getMenuData() {
-        return this.menuData;
+    // Regenerate menu
+    this.generateMenu();
+
+    console.log(`✅ آیتم منو جدید اضافه شد:`, newItem);
+  }
+
+  /**
+   * Remove menu item
+   */
+  removeMenuItem(itemId) {
+    if (!this.menuData || !this.menuData.menuData) {
+      throw new Error("داده‌های منو بارگذاری نشده است");
     }
 
-    /**
-     * Export menu data as JSON string
-     */
-    exportMenuData() {
-        return JSON.stringify(this.menuData, null, 2);
+    const itemIndex = this.menuData.menuData.items.findIndex(
+      (item) => item.id === itemId
+    );
+    if (itemIndex === -1) {
+      throw new Error(`آیتم منو با شناسه ${itemId} یافت نشد`);
     }
 
-    /**
-     * Validate menu data structure
-     */
-    validateMenuData(data) {
-        const errors = [];
+    this.menuData.menuData.items.splice(itemIndex, 1);
 
-        if (!data.menuData) {
-            errors.push('خاصیت menuData یافت نشد');
-            return errors;
-        }
+    // Regenerate menu
+    this.generateMenu();
 
-        const { logo, items } = data.menuData;
+    console.log(`✅ آیتم منو ${itemId} حذف شد`);
+  }
 
-        // Validate logo
-        if (!logo || !logo.text || !logo.url) {
-            errors.push('اطلاعات لوگو کامل نیست');
-        }
+  /**
+   * Get current menu data
+   */
+  getMenuData() {
+    return this.menuData;
+  }
 
-        // Validate items
-        if (!Array.isArray(items)) {
-            errors.push('آیتم‌های منو باید آرایه باشند');
-            return errors;
-        }
+  /**
+   * Export menu data as JSON string
+   */
+  exportMenuData() {
+    return JSON.stringify(this.menuData, null, 2);
+  }
 
-        items.forEach((item, index) => {
-            if (!item.id || !item.title || !item.type) {
-                errors.push(`آیتم منو ${index}: فیلدهای اجباری (id, title, type) یافت نشد`);
-            }
+  /**
+   * Validate menu data structure
+   */
+  validateMenuData(data) {
+    const errors = [];
 
-            if (item.type === 'mega' && (!item.columns || !Array.isArray(item.columns))) {
-                errors.push(`آیتم منو ${index}: مگامنو باید دارای ستون‌ها باشد`);
-            }
-
-            if (item.type === 'dropdown' && (!item.items || !Array.isArray(item.items))) {
-                errors.push(`آیتم منو ${index}: منوی کرکره‌ای باید دارای آیتم‌ها باشد`);
-            }
-        });
-
-        return errors;
+    if (!data.menuData) {
+      errors.push("خاصیت menuData یافت نشد");
+      return errors;
     }
+
+    const { logo, items } = data.menuData;
+
+    // Validate logo
+    if (!logo || !logo.text || !logo.url) {
+      errors.push("اطلاعات لوگو کامل نیست");
+    }
+
+    // Validate items
+    if (!Array.isArray(items)) {
+      errors.push("آیتم‌های منو باید آرایه باشند");
+      return errors;
+    }
+
+    items.forEach((item, index) => {
+      if (!item.id || !item.title || !item.type) {
+        errors.push(
+          `آیتم منو ${index}: فیلدهای اجباری (id, title, type) یافت نشد`
+        );
+      }
+
+      if (
+        item.type === "mega" &&
+        (!item.columns || !Array.isArray(item.columns))
+      ) {
+        errors.push(`آیتم منو ${index}: مگامنو باید دارای ستون‌ها باشد`);
+      }
+
+      if (
+        item.type === "dropdown" &&
+        (!item.items || !Array.isArray(item.items))
+      ) {
+        errors.push(`آیتم منو ${index}: منوی کرکره‌ای باید دارای آیتم‌ها باشد`);
+      }
+    });
+
+    return errors;
+  }
 }
 
 // Auto-initialize if DOM is ready
-if (typeof document !== 'undefined') {
-    document.addEventListener('DOMContentLoaded', () => {
-        // Make the class globally available
-        window.EspritDynamicMenu = EspritDynamicMenu;
-        console.log('🎯 کلاس تولید منوی پویا آماده است');
-    });
+if (typeof document !== "undefined") {
+  document.addEventListener("DOMContentLoaded", () => {
+    // Make the class globally available
+    window.EspritDynamicMenu = EspritDynamicMenu;
+    console.log("🎯 کلاس تولید منوی پویا آماده است");
+  });
 }
 
 // Export for Node.js environments
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = EspritDynamicMenu;
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = EspritDynamicMenu;
 }
