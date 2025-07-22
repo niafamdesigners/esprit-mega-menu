@@ -1,0 +1,13 @@
+# Ignore mega-site-navigation-master directory
+mega-site-navigation-master/
+
+# Common files to ignore
+node_modules/
+.DS_Store
+.vscode/
+.idea/
+*.log
+*.tmp
+*.temp
+dist/
+build/
