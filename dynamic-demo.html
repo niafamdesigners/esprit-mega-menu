@@ -5,80 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مگامنوی پویا - Dynamic Mega Menu Demo</title>
     <link rel="stylesheet" href="megamenu-styles.css">
-    <style>
-        /* Additional styles for demo */
-        .demo-controls {
-            background: #f8f9fa;
-            padding: 20px;
-            margin: 20px auto;
-            max-width: 1200px;
-            border-radius: 8px;
-            border: 1px solid #dee2e6;
-        }
-        
-        .demo-controls h2 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-        
-        .demo-buttons {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
-        }
-        
-        .demo-btn {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background 0.2s ease;
-        }
-        
-        .demo-btn:hover {
-            background: #5a67d8;
-        }
-        
-        .demo-btn--danger {
-            background: #e53e3e;
-        }
-        
-        .demo-btn--danger:hover {
-            background: #c53030;
-        }
-        
-        .demo-json {
-            background: #2d3748;
-            color: #e2e8f0;
-            padding: 15px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            max-height: 300px;
-            overflow-y: auto;
-            white-space: pre-wrap;
-            direction: ltr;
-            text-align: left;
-        }
-        
-        .demo-status {
-            background: #48bb78;
-            color: white;
-            padding: 10px;
-            border-radius: 4px;
-            margin-top: 10px;
-            display: none;
-        }
-        
-        .demo-status.error {
-            background: #e53e3e;
-        }
-    </style>
+    <!-- استایل‌های مربوط به کنترل‌های نمایشی حذف شدند -->
 </head>
 <body>
     <header class="esprit-header">
@@ -89,23 +16,7 @@
         </nav>
     </header>
 
-    <!-- Demo Controls -->
-    <div class="demo-controls">
-        <h2>🎛️ کنترل‌های نمایشی منوی پویا</h2>
-        
-        <div class="demo-buttons">
-            <button class="demo-btn" onclick="loadDefaultMenu()">بارگذاری منوی پیش‌فرض</button>
-            <button class="demo-btn" onclick="loadFromFile()">بارگذاری از فایل JSON</button>
-            <button class="demo-btn" onclick="addSampleItem()">اضافه کردن آیتم نمونه</button>
-            <button class="demo-btn" onclick="exportCurrentMenu()">صادرات JSON فعلی</button>
-            <button class="demo-btn demo-btn--danger" onclick="clearMenu()">پاک کردن منو</button>
-        </div>
-        
-        <div id="demo-status" class="demo-status"></div>
-        
-        <h3>📋 JSON فعلی منو:</h3>
-        <div id="json-display" class="demo-json">منو هنوز بارگذاری نشده است...</div>
-    </div>
+    <!-- بخش کنترل‌های نمایشی حذف شد -->
 
     <!-- Main Content -->
     <main class="esprit-main">
@@ -166,124 +77,17 @@
         window.PREVENT_AUTO_INIT = true;
         
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('🎯 Dynamic Demo: Initializing dynamic menu only...');
+            console.log('🎯 Dynamic Demo: Initializing dynamic menu...');
             dynamicMenu = new EspritDynamicMenu();
-            showStatus('منوی پویا آماده است. از دکمه‌های بالا برای تست استفاده کنید.', 'success');
-        });
-
-        // Load default menu from JSON file
-        async function loadDefaultMenu() {
-            try {
-                showStatus('در حال بارگذاری منوی پیش‌فرض...', 'info');
-                await dynamicMenu.loadMenuData('./menu-schema.json');
-                dynamicMenu.generateMenu();
-                updateJsonDisplay();
-                showStatus('منوی پیش‌فرض با موفقیت بارگذاری شد!', 'success');
-            } catch (error) {
-                showStatus(`خطا در بارگذاری: ${error.message}`, 'error');
-            }
-        }
-
-        // Load menu from file input
-        function loadFromFile() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = '.json';
-            input.onchange = async (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    try {
-                        showStatus('در حال بارگذاری فایل...', 'info');
-                        const text = await file.text();
-                        const data = JSON.parse(text);
-                        
-                        // Validate data
-                        const errors = dynamicMenu.validateMenuData(data);
-                        if (errors.length > 0) {
-                            throw new Error(`خطاهای اعتبارسنجی: ${errors.join(', ')}`);
-                        }
-                        
-                        await dynamicMenu.loadMenuData(data);
-                        dynamicMenu.generateMenu();
-                        updateJsonDisplay();
-                        showStatus('فایل JSON با موفقیت بارگذاری شد!', 'success');
-                    } catch (error) {
-                        showStatus(`خطا در بارگذاری فایل: ${error.message}`, 'error');
-                    }
-                }
-            };
-            input.click();
-        }
-
-        // Add a sample menu item
-        function addSampleItem() {
-            try {
-                const sampleItem = {
-                    id: `sample-${Date.now()}`,
-                    title: 'آیتم نمونه',
-                    url: '#sample',
-                    type: 'dropdown',
-                    items: [
-                        { title: 'زیرمنو ۱', url: '#sub1' },
-                        { title: 'زیرمنو ۲', url: '#sub2' }
-                    ]
-                };
-                
-                dynamicMenu.addMenuItem(sampleItem);
-                updateJsonDisplay();
-                showStatus('آیتم نمونه اضافه شد!', 'success');
-            } catch (error) {
-                showStatus(`خطا در اضافه کردن آیتم: ${error.message}`, 'error');
-            }
-        }
-
-        // Export current menu as JSON
-        function exportCurrentMenu() {
-            try {
-                const jsonData = dynamicMenu.exportMenuData();
-                const blob = new Blob([jsonData], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'menu-export.json';
-                a.click();
-                URL.revokeObjectURL(url);
-                showStatus('فایل JSON صادر شد!', 'success');
-            } catch (error) {
-                showStatus(`خطا در صادرات: ${error.message}`, 'error');
-            }
-        }
-
-        // Clear menu
-        function clearMenu() {
-            if (confirm('آیا مطمئن هستید که می‌خواهید منو را پاک کنید؟')) {
-                document.querySelector('.esprit-nav__container').innerHTML = '';
-                document.getElementById('json-display').textContent = 'منو پاک شد...';
-                showStatus('منو پاک شد.', 'info');
-            }
-        }
-
-        // Update JSON display
-        function updateJsonDisplay() {
-            const jsonData = dynamicMenu.exportMenuData();
-            document.getElementById('json-display').textContent = jsonData;
-        }
-
-        // Show status message
-        function showStatus(message, type = 'info') {
-            const statusEl = document.getElementById('demo-status');
-            statusEl.textContent = message;
-            statusEl.className = `demo-status ${type}`;
-            statusEl.style.display = 'block';
             
-            setTimeout(() => {
-                statusEl.style.display = 'none';
-            }, 5000);
-        }
-
-        // Auto-load default menu on page load
-        window.addEventListener('load', () => {
-            setTimeout(loadDefaultMenu, 500);
+            // Load menu from JSON file
+            dynamicMenu.loadMenuData('./menu-schema.json')
+                .then(() => {
+                    dynamicMenu.generateMenu();
+                })
+                .catch(error => {
+                    console.error('Error loading menu:', error);
+                });
         });
     </script>
 </body>

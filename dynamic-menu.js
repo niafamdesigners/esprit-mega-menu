@@ -49,9 +49,6 @@ class EspritDynamicMenu {
     // Clear existing content
     this.container.innerHTML = "";
 
-    // Generate logo
-    const logoHTML = this.generateLogo(logo);
-
     // Generate menu items
     const menuHTML = this.generateMenuItems(items);
 
@@ -60,7 +57,6 @@ class EspritDynamicMenu {
 
     // Combine all parts
     this.container.innerHTML = `
-            ${logoHTML}
             ${menuHTML}
             ${toggleHTML}
         `;
@@ -73,16 +69,7 @@ class EspritDynamicMenu {
     return this.container;
   }
 
-  /**
-   * Generate logo HTML
-   */
-  generateLogo(logo) {
-    return `
-            <div class="esprit-nav__logo">
-                <a href="${logo.url}" class="esprit-nav__logo-link">${logo.text}</a>
-            </div>
-        `;
-  }
+  // تابع generateLogo حذف شد
 
   /**
    * Generate menu items HTML
@@ -317,137 +304,13 @@ class EspritDynamicMenu {
     }
   }
 
-  /**
-   * Update specific menu item
-   */
-  updateMenuItem(itemId, newData) {
-    if (!this.menuData || !this.menuData.menuData) {
-      throw new Error("داده‌های منو بارگذاری نشده است");
-    }
-
-    const itemIndex = this.menuData.menuData.items.findIndex(
-      (item) => item.id === itemId
-    );
-    if (itemIndex === -1) {
-      throw new Error(`آیتم منو با شناسه ${itemId} یافت نشد`);
-    }
-
-    // Update the data
-    this.menuData.menuData.items[itemIndex] = {
-      ...this.menuData.menuData.items[itemIndex],
-      ...newData,
-    };
-
-    // Regenerate menu
-    this.generateMenu();
-
-    console.log(`✅ آیتم منو ${itemId} به‌روزرسانی شد`);
-  }
-
-  /**
-   * Add new menu item
-   */
-  addMenuItem(newItem, position = -1) {
-    if (!this.menuData || !this.menuData.menuData) {
-      throw new Error("داده‌های منو بارگذاری نشده است");
-    }
-
-    if (position === -1) {
-      this.menuData.menuData.items.push(newItem);
-    } else {
-      this.menuData.menuData.items.splice(position, 0, newItem);
-    }
-
-    // Regenerate menu
-    this.generateMenu();
-
-    console.log(`✅ آیتم منو جدید اضافه شد:`, newItem);
-  }
-
-  /**
-   * Remove menu item
-   */
-  removeMenuItem(itemId) {
-    if (!this.menuData || !this.menuData.menuData) {
-      throw new Error("داده‌های منو بارگذاری نشده است");
-    }
-
-    const itemIndex = this.menuData.menuData.items.findIndex(
-      (item) => item.id === itemId
-    );
-    if (itemIndex === -1) {
-      throw new Error(`آیتم منو با شناسه ${itemId} یافت نشد`);
-    }
-
-    this.menuData.menuData.items.splice(itemIndex, 1);
-
-    // Regenerate menu
-    this.generateMenu();
-
-    console.log(`✅ آیتم منو ${itemId} حذف شد`);
-  }
+  // توابع updateMenuItem، addMenuItem و removeMenuItem حذف شدند
 
   /**
    * Get current menu data
    */
   getMenuData() {
     return this.menuData;
-  }
-
-  /**
-   * Export menu data as JSON string
-   */
-  exportMenuData() {
-    return JSON.stringify(this.menuData, null, 2);
-  }
-
-  /**
-   * Validate menu data structure
-   */
-  validateMenuData(data) {
-    const errors = [];
-
-    if (!data.menuData) {
-      errors.push("خاصیت menuData یافت نشد");
-      return errors;
-    }
-
-    const { logo, items } = data.menuData;
-
-    // Validate logo
-    if (!logo || !logo.text || !logo.url) {
-      errors.push("اطلاعات لوگو کامل نیست");
-    }
-
-    // Validate items
-    if (!Array.isArray(items)) {
-      errors.push("آیتم‌های منو باید آرایه باشند");
-      return errors;
-    }
-
-    items.forEach((item, index) => {
-      if (!item.id || !item.title || !item.type) {
-        errors.push(
-          `آیتم منو ${index}: فیلدهای اجباری (id, title, type) یافت نشد`
-        );
-      }
-
-      if (
-        item.type === "mega" &&
-        (!item.columns || !Array.isArray(item.columns))
-      ) {
-        errors.push(`آیتم منو ${index}: مگامنو باید دارای ستون‌ها باشد`);
-      }
-
-      if (
-        item.type === "dropdown" &&
-        (!item.items || !Array.isArray(item.items))
-      ) {
-        errors.push(`آیتم منو ${index}: منوی کرکره‌ای باید دارای آیتم‌ها باشد`);
-      }
-    });
-
-    return errors;
   }
 }
 

@@ -2,9 +2,6 @@
 .esprit-header{background:linear-gradient(135deg,var(--ui-primary) 0%,var(--ui-primary-dark) 50%,var(--ui-primary-light) 100%);box-shadow:var(--ui-shadow-lg);position:relative;z-index:1000;border-bottom:2px solid var(--ui-accent)}
 .esprit-nav{position:relative}
 .esprit-nav__container{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0 20px}
-.esprit-nav__logo{flex-shrink:0}
-.esprit-nav__logo-link{color:var(--ui-text-inverse);text-decoration:none;font-size:24px;font-weight:700;padding:15px 0;display:block;transition:all var(--ui-transition-normal);letter-spacing:-.025em}
-.esprit-nav__logo-link:hover{color:var(--ui-accent-light);transform:translateY(-1px)}
 .esprit-menu{display:flex;list-style:none;margin:0;padding:0}
 .esprit-menu__item{position:relative}
 .esprit-menu__link{color:var(--ui-text-inverse);text-decoration:none;padding:20px 18px;display:flex;align-items:center;font-weight:500;transition:all var(--ui-transition-normal);border-radius:var(--ui-radius-md);margin:0 2px;position:relative;overflow:hidden}
