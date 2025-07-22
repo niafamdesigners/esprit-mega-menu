@@ -19,7 +19,7 @@
 .esprit-mega-menu__column{animation:fadeInUp .6s ease forwards}
 .esprit-mega-menu__column:nth-child(2){animation-delay:.1s}
 .esprit-mega-menu__column:nth-child(3){animation-delay:.2s}
-.esprit-mega-menu__title{color:var(--ui-primary-dark);font-size:17px;font-weight:700;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--ui-primary-dark);position:relative;letter-spacing:-.025em;text-transform:uppercase;font-family:'Inter','Segoe UI','Arial',sans-serif}
+.esprit-mega-menu__title{color:var(--ui-primary-dark);font-size:17px;font-weight:700;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid var(--ui-primary-dark);position:relative;letter-spacing:-.025em;text-transform:uppercase;}
 .esprit-mega-menu__title::after{content:'';position:absolute;bottom:-2px;right:0;width:40px;height:2px;background:linear-gradient(90deg,var(--ui-accent) 0%,var(--ui-accent-light) 100%);border-radius:var(--ui-radius-sm)}
 .esprit-mega-menu__list{list-style:none}
 .esprit-mega-menu__item{margin-bottom:6px}
